@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AdjacencyGraph {
     ArrayList<Vertex> Vertecies;
@@ -33,11 +35,39 @@ public class AdjacencyGraph {
             System.out.println("");
         }
     }
-    public void primMST() {
-        
-    }
 
     /*
+    public void primMST() {
+        MinHeap<Pair> q = new MinHeap<>();
+        Map<Vertex, Integer> d = new HashMap<>();
+        Map<Vertex, Vertex> p = new HashMap<>();
+        for (int i = 0; i < Vertecies.size(); i++) {
+            d.put(Vertecies.get(i), Integer.MAX_VALUE);
+            d.put(Vertecies.get(i), null);
+            Pair newPair = new Pair(Vertecies.get(i), d.get(i));
+            q.Insert(newPair);
+        }
+        d.put(Vertecies.get(0), 0);
+        while (!q.isEmpty()) {
+            Pair u = q.extractMin();
+            for (int i = 0; i < u.previous.outEdges.size(); i++) {
+                if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to) && !u.previous.visited) {
+                    d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);
+                    p.put(u.previous.outEdges.get(i).to, u.previous);
+                    int pos = q.getPosition(u);
+                    //q.decreasekey(pos);
+                }
+            }
+            u.previous.visited = true;
+        }
+        for (Vertex city : p.keySet()) {
+            System.out.println("city: " + city.name + " to " + p.get(city) + " has distance " + d.get(city));
+            
+        }
+    }
+    */
+
+    
     public void primMST() {
         Integer[] d = new Integer[Vertecies.size()];
         Vertex[] p = new Vertex[Vertecies.size()];
@@ -72,5 +102,5 @@ public class AdjacencyGraph {
         }
        
     }
-    */
+    
 }
