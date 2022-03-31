@@ -16,7 +16,7 @@ public class AdjacencyGraph {
         Vertecies.add(name);
     }
 
-    // method that adds an edge to the grap. This is bidirectional.
+    // method that adds an edge to the grap. This is undirected.
     public void addEdge(Vertex from, Vertex to, Integer weight) {
         if(!Vertecies.contains(from) && Vertecies.contains(to)){
             System.out.println("missing vertecies from graph");
@@ -44,9 +44,9 @@ public class AdjacencyGraph {
     // prims algorithm
     public void primMST() {
         //initialization of heap and Maps
-        MinHeap<Pair> q = new MinHeap<>();
-        Map<Vertex, Integer> d = new HashMap<>();
-        Map<Vertex, Vertex> p = new HashMap<>();
+        MinHeap<Pair> q = new MinHeap<>(); // heap containing Pair, From and weights/distances from adjacency graph
+        Map<Vertex, Integer> d = new HashMap<>(); // Map that contains From and weights/distances for the minimum spanning tree
+        Map<Vertex, Vertex> p = new HashMap<>(); // Map containing From and To destinatinos of vertecies for the minimum spanning tree
 
         //set 
         for (int i = 0; i < Vertecies.size(); i++) {
@@ -61,11 +61,13 @@ public class AdjacencyGraph {
         while (!q.isEmpty()) {
             Pair u = q.extractMin();  // - get minimum weight 
             for (int i = 0; i < u.previous.outEdges.size(); i++) {
+
+                // if weight on current edge is smaller than the Weight in the minimumspanning tree map AND the vertex is not visited, do
                 if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to) && !u.previous.visited) {
-                    d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);
-                    p.put(u.previous.outEdges.get(i).to, u.previous);
+                    d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap current weight with the min weight saved in d
+                    p.put(u.previous.outEdges.get(i).to, u.previous);   // insert the vertex to the p Map
                     int pos = q.getPosition(u);
-                    q.decreasekey(pos);
+                    q.decreasekey(pos); //update heap to follow correct heap order
                 }
             }
             u.previous.visited = true;  // mark the node as visited 
@@ -79,6 +81,7 @@ public class AdjacencyGraph {
     public void printMST( Map<Vertex, Vertex> p,  Map<Vertex, Integer> d) {
         int i = 0;
         int totalDist = 0;
+        //show all connections in the mininmum spanning tree
         for (Vertex city : p.keySet()) {
             if(p.get(city) != null){
                 System.out.println(i + ": city: " + city.getName() + " to " + p.get(city).getName() + " has distance " + d.get(city) + " km.");
@@ -86,7 +89,7 @@ public class AdjacencyGraph {
             i++;
             totalDist += d.get(city); 
         }
-
+        //total distance and price
         System.out.println("total distance traveld " + totalDist + ".");
         System.out.println("total price to wire up the grid " + totalDist * 1000000 + "dkk.");
     }
