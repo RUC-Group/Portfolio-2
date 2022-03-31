@@ -1,14 +1,17 @@
 public class App {
+    //Main method
     public static void main(String[] args) throws Exception {
         AdjacencyGraph electricalGrid = makeElectricGridGraph();
-        electricalGrid.printGraph();
+        //electricalGrid.printGraph();
         electricalGrid.primMST();
 
     }
 
-
+    // creation of electrical grid graph
     public static AdjacencyGraph makeElectricGridGraph() {
         AdjacencyGraph electricGrid = new AdjacencyGraph();
+
+        // create Vertecies
         Vertex eskildstrup = new Vertex("Eskildstrup");
         Vertex haslev = new Vertex("Haslev");
         Vertex holdbæk = new Vertex("Holdbæk");
@@ -26,6 +29,7 @@ public class App {
         Vertex sorø = new Vertex("Sorø");
         Vertex vordingborg = new Vertex("Vordingborg");
 
+        //add Vertecies to graph
         electricGrid.addVertex(eskildstrup);
         electricGrid.addVertex(haslev);
         electricGrid.addVertex(holdbæk);
@@ -43,6 +47,7 @@ public class App {
         electricGrid.addVertex(sorø);
         electricGrid.addVertex(vordingborg);   
         
+        // add Edges to the graph
         electricGrid.addEdge(eskildstrup, maribo, 28);
         electricGrid.addEdge(eskildstrup, nykøbing, 13);
         electricGrid.addEdge(eskildstrup, vordingborg, 24);
@@ -63,7 +68,7 @@ public class App {
         electricGrid.addEdge(holdbæk, sorø, 34);
         electricGrid.addEdge(jærgerspris, korsør, 95);
         electricGrid.addEdge(jærgerspris, køge, 58);
-        electricGrid.addEdge(jærgerspris, ringsted, 56);
+        electricGrid.addEdge(jærgerspris, ringsted, 56);    
         electricGrid.addEdge(jærgerspris, roskilde, 33);
         electricGrid.addEdge(jærgerspris, slagelse, 74);
         electricGrid.addEdge(jærgerspris, sorø, 63);
