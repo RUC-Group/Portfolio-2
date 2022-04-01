@@ -12,22 +12,22 @@ public class App {
         AdjacencyGraph electricGrid = new AdjacencyGraph();
 
         // create Vertecies
-        Vertex eskildstrup = new Vertex("Eskildstrup");
-        Vertex haslev = new Vertex("Haslev");
-        Vertex holdbæk = new Vertex("Holdbæk");
-        Vertex jærgerspris = new Vertex("Jægerspris");
-        Vertex kalundborg = new Vertex("Kaldundborg");
-        Vertex korsør = new Vertex("Korsør");
-        Vertex køge = new Vertex("Køge");
-        Vertex maribo = new Vertex("Maribo");
-        Vertex nakskov = new Vertex("Nakskov");
-        Vertex nykøbing = new Vertex("Nykøbing F.");
-        Vertex næstved = new Vertex("Næstved");
-        Vertex ringsted = new Vertex("Ringsted");
-        Vertex roskilde = new Vertex("Roskilde");
-        Vertex slagelse = new Vertex("Slagelse");
-        Vertex sorø = new Vertex("Sorø");
-        Vertex vordingborg = new Vertex("Vordingborg");
+        Vertex eskildstrup = new Vertex("Eskildstrup",0);
+        Vertex haslev = new Vertex("Haslev",1);
+        Vertex holdbæk = new Vertex("Holdbæk",2);
+        Vertex jærgerspris = new Vertex("Jægerspris",3);
+        Vertex kalundborg = new Vertex("Kaldundborg",4);
+        Vertex korsør = new Vertex("Korsør",5);
+        Vertex køge = new Vertex("Køge",6);
+        Vertex maribo = new Vertex("Maribo",7);
+        Vertex nakskov = new Vertex("Nakskov",8);
+        Vertex nykøbing = new Vertex("Nykøbing F.",9);
+        Vertex næstved = new Vertex("Næstved",10);
+        Vertex ringsted = new Vertex("Ringsted",11);
+        Vertex roskilde = new Vertex("Roskilde",12);
+        Vertex slagelse = new Vertex("Slagelse",13);
+        Vertex sorø = new Vertex("Sorø",14);
+        Vertex vordingborg = new Vertex("Vordingborg",15);
 
         //add Vertecies to graph
         electricGrid.addVertex(eskildstrup);

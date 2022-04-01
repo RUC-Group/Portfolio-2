@@ -3,11 +3,13 @@
 public class Pair implements Comparable<Pair>{
     Vertex previous;
     Integer distance;
+    int index;
 
     // constructor
-    public Pair(Vertex prev, Integer distance){
+    public Pair(Vertex prev, Integer distance,int index){
         this.distance = distance;
         this.previous = prev;
+        this.index = index;
     }
 
     // compare to method

@@ -5,11 +5,13 @@ public class Vertex {
     String name;
     ArrayList<Edge> outEdges;
     boolean visited = false;
+    int index;
 
     //constructor
-    public Vertex(String name){
+    public Vertex(String name,int index){
         this.name = name;
         outEdges = new ArrayList<>();
+        this.index=index;
     }
     //getter for name
     public String getName() {

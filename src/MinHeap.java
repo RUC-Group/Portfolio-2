@@ -1,18 +1,29 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MinHeap<T extends Comparable<T> >{
-    HashMap<T,Integer> positionTable=new HashMap<>();
+public class MinHeap{
+    HashMap<Pair,Integer> positionTable=new HashMap<>();
 
     // root is at index 0
-    ArrayList<T> minheap;
+    ArrayList<Pair> minheap;
     private int size;
     public MinHeap(){
-        this.minheap=new ArrayList<T>();
+        this.minheap=new ArrayList<Pair>();
         this.size=0;
     }
-    public int getPosition(T item){
-        return positionTable.get(item);
+    public int getPosition(Pair p){
+        return positionTable.get(p);
+    }
+    public int getPosition(Vertex v){
+        for(int i = 0; i < minheap.size() ; i++){
+            if(minheap.get(i).previous.name.equals(v.name)){
+                return positionTable.get(minheap.get(i));
+            }
+        }
+        return -1;
+    }
+    public void updatePair (int pos, int dist){
+        minheap.get(pos).distance=dist;
     }
     public boolean isEmpty(){
         return size <= 0;
@@ -27,14 +38,14 @@ public class MinHeap<T extends Comparable<T> >{
         return pos*2 +2;
     }
     private void swap(int pos1, int pos2){
-        T dummy= minheap.get(pos1);
+        Pair dummy= minheap.get(pos1);
 
         minheap.set(pos1, minheap.get(pos2));
         minheap.set(pos2,dummy);
         positionTable.put(minheap.get(pos1),pos1);
         positionTable.put(minheap.get(pos2),pos2);
     }
-    public void Insert(T item){
+    public void Insert(Pair item){
         minheap.add(item);
         positionTable.put(item,size);
         size++;
@@ -48,7 +59,7 @@ public class MinHeap<T extends Comparable<T> >{
         }
     }
 
-    public T viewMin(){
+    public Pair viewMin(){
         return minheap.get(0);
     }
     private boolean movedown(int pos){
@@ -74,12 +85,17 @@ public class MinHeap<T extends Comparable<T> >{
             }
         }
     }
-    public T extractMin(){
-        T min = minheap.get(0);
+    public Pair extractMin(){
+        Pair min = minheap.get(0);
         minheap.set(0, minheap.get(size-1));
         positionTable.put(minheap.get(0),0);
         size--;
         increasekey(0);
         return min;
+    }
+    public void printHeap(){
+        for(int i=0; i<minheap.size();i++){
+            System.out.println("city name:" + minheap.get(i).previous.name + " distance: " + minheap.get(i).distance);
+        }
     }
 }
