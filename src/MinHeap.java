@@ -1,21 +1,18 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MinHeap{
-    HashMap<Pair,Integer> positionTable=new HashMap<>();
+public class MinHeap<T extends Comparable<T> >{
+    HashMap<T,Integer> positionTable=new HashMap<>();
 
     // root is at index 0
-    ArrayList<Pair> minheap;
+    ArrayList<T> minheap;
     private int size;
     public MinHeap(){
-        this.minheap=new ArrayList<Pair>();
+        this.minheap=new ArrayList<T>();
         this.size=0;
     }
-    public int getPosition(Pair p){
-        return positionTable.get(p);
-    }
-    public void updatePair (int pos, int dist){
-        minheap.get(pos).distance=dist;
+    public int getPosition(T item){
+        return positionTable.get(item);
     }
     public boolean isEmpty(){
         return size <= 0;
@@ -30,14 +27,14 @@ public class MinHeap{
         return pos*2 +2;
     }
     private void swap(int pos1, int pos2){
-        Pair dummy= minheap.get(pos1);
+        T dummy= minheap.get(pos1);
 
         minheap.set(pos1, minheap.get(pos2));
         minheap.set(pos2,dummy);
         positionTable.put(minheap.get(pos1),pos1);
         positionTable.put(minheap.get(pos2),pos2);
     }
-    public void Insert(Pair item){
+    public void Insert(T item){
         minheap.add(item);
         positionTable.put(item,size);
         size++;
@@ -51,7 +48,7 @@ public class MinHeap{
         }
     }
 
-    public Pair viewMin(){
+    public T viewMin(){
         return minheap.get(0);
     }
     private boolean movedown(int pos){
@@ -77,17 +74,12 @@ public class MinHeap{
             }
         }
     }
-    public Pair extractMin(){
-        Pair min = minheap.get(0);
+    public T extractMin(){
+        T min = minheap.get(0);
         minheap.set(0, minheap.get(size-1));
         positionTable.put(minheap.get(0),0);
         size--;
         increasekey(0);
         return min;
-    }
-    public void printHeap(){
-        for(int i=0; i<minheap.size();i++){
-            System.out.println("city name:" + minheap.get(i).previous.name + " distance: " + minheap.get(i).distance);
-        }
     }
 }

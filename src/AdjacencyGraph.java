@@ -4,12 +4,7 @@ import java.util.Map;
 
 // class containing every method needed for an adjacency Graph
 public class AdjacencyGraph {
-    ArrayList<Vertex> Vertecies; // - list of all vertecies in the graph
-
-    //constructor
-    public AdjacencyGraph(){
-        Vertecies = new ArrayList<>();
-    }
+    ArrayList<Vertex> Vertecies = new ArrayList<>();; // - list of all vertecies in the graph
 
     // method that adds a vertext to the graph
     public void addVertex(Vertex name) {
@@ -44,15 +39,15 @@ public class AdjacencyGraph {
     // prims algorithm
     public void primMST() {
         //initialization of heap and Maps
-        MinHeap q = new MinHeap(); // heap containing Pair, From and weights/distances from adjacency graph
+        MinHeap<Pair> q = new MinHeap<Pair>(); // heap containing Pair, From and weights/distances from adjacency graph
         Map<Vertex, Integer> d = new HashMap<>(); // Map that contains From and weights/distances for the minimum spanning tree
         Map<Vertex, Vertex> p = new HashMap<>(); // Map containing From and To destinatinos of vertecies for the minimum spanning tree
-        ArrayList<Pair> VertexPairs=new ArrayList<>();
+        ArrayList<Pair> VertexPairs=new ArrayList<>(); // List to store all Pairs, needed to acces and update correct pair
 
         //set 
         for (int i = 0; i < Vertecies.size(); i++) {
-            d.put(Vertecies.get(i), Integer.MAX_VALUE);
-            p.put(Vertecies.get(i), null);
+            d.put(Vertecies.get(i), Integer.MAX_VALUE); //filling d values of vertices with infinite
+            p.put(Vertecies.get(i), null); //setting previous vertices of vertices to null
         }
         d.put(Vertecies.get(0), 0);
 
@@ -67,15 +62,17 @@ public class AdjacencyGraph {
         // main loop in the algortihm 
         while (!q.isEmpty()) {
             Pair u = q.extractMin();  // - get minimum weight 
-            for (int i = 0; i < u.previous.outEdges.size(); i++) {
+            for (int i = 0; i < u.previous.outEdges.size(); i++) { // iterating through every edge outgoing from the vertex in u.
 
                 // if weight on current edge is smaller than the Weight in the minimumspanning tree map AND the vertex is not visited, do
                 if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to)  && !u.previous.outEdges.get(i).to.visited) {
                    
-                    d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap current weight with the min weight saved in d
+                    d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap the min weight saved in d with the new min weight 
                     p.put(u.previous.outEdges.get(i).to, u.previous);   // insert the vertex to the p Map
-                    pos = q.getPosition(VertexPairs.get(u.previous.outEdges.get(i).to.index));
-                    VertexPairs.get(u.previous.outEdges.get(i).to.index).distance = d.get(u.previous.outEdges.get(i).to);
+
+                    pos = q.getPosition(VertexPairs.get(u.previous.outEdges.get(i).to.index)); //searching for the pair with the vertex the edge is connecting to.
+
+                    VertexPairs.get(u.previous.outEdges.get(i).to.index).distance = d.get(u.previous.outEdges.get(i).to); //updating the distance variable of the pair with the new min weight.
                     q.decreasekey(pos); //update heap to follow correct heap order
                     
                 }
@@ -88,18 +85,18 @@ public class AdjacencyGraph {
 
     // method that prints minimum spanning tree, Used in Prims algorithm
     public void printMST( Map<Vertex, Vertex> p,  Map<Vertex, Integer> d) {
-        int i = 0;
+        int i = 1;
         int totalDist = 0;
         //show all connections in the mininmum spanning tree
         for (Vertex city : p.keySet()) {
             if(p.get(city) != null){
-                System.out.println(i + ": city: " + city.getName() + " to " + p.get(city).getName() + " has distance " + d.get(city) + " km.");
+                System.out.println("Connection " + i +": " + p.get(city).getName() + " to " + city.getName() + " has distance " + d.get(city) + " km.");
             }
             i++;
             totalDist += d.get(city); 
         }
         //total distance and price
-        System.out.println("total distance traveld " + totalDist + ".");
+        System.out.println("\ntotal distance travelled " + totalDist + "km.");
         System.out.println("total price to wire up the grid " + totalDist * 1000000 + "dkk.");
     }
 }
