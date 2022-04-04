@@ -2,8 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.text.html.HTMLDocument.HTMLReader.PreAction;
-
 // class containing every method needed for an adjacency Graph
 public class AdjacencyGraph {
     ArrayList<Vertex> Vertecies; // - list of all vertecies in the graph
@@ -59,7 +57,7 @@ public class AdjacencyGraph {
         d.put(Vertecies.get(0), 0);
 
         for (int i = 0; i < Vertecies.size(); i++) {
-            Pair newPair = new Pair(Vertecies.get(i), d.get(Vertecies.get(i)),i);
+            Pair newPair = new Pair(Vertecies.get(i), d.get(Vertecies.get(i)));
             VertexPairs.add(newPair);
             q.Insert(newPair);
         }
@@ -72,24 +70,18 @@ public class AdjacencyGraph {
             for (int i = 0; i < u.previous.outEdges.size(); i++) {
 
                 // if weight on current edge is smaller than the Weight in the minimumspanning tree map AND the vertex is not visited, do
-                //System.out.println(u.previous.name);
-                if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to) && !u.previous.outEdges.get(i).to.visited) {
+                if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to)  && !u.previous.outEdges.get(i).to.visited) {
+                   
                     d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap current weight with the min weight saved in d
                     p.put(u.previous.outEdges.get(i).to, u.previous);   // insert the vertex to the p Map
-                    System.out.println("to: "+u.previous.outEdges.get(i).to.name+"\n d[v]==" +d.get(u.previous.outEdges.get(i).to)+"Pair check: "+ VertexPairs.get(u.previous.outEdges.get(i).to.index).previous.name);
-                    //Pair newPair = new Pair(u.previous.outEdges.get(i).to, d.get(u.previous.outEdges.get(i).to));
-                    pos = q.getPosition(u.previous.outEdges.get(i).to);
-                    VertexPairs.get(u.previous.outEdges.get(i).to.index).distance=d.get(u.previous.outEdges.get(i).to);
-                    //q.updatePair(pos, d.get(u.previous.outEdges.get(i).to));
+                    pos = q.getPosition(VertexPairs.get(u.previous.outEdges.get(i).to.index));
+                    VertexPairs.get(u.previous.outEdges.get(i).to.index).distance = d.get(u.previous.outEdges.get(i).to);
                     q.decreasekey(pos); //update heap to follow correct heap order
-                    System.out.print("number of iterations for: "+ i + u.previous.name + ":");
-                    System.out.print("\n");
-                    q.printHeap();
+                    
                 }
             }
             u.previous.visited = true;  // mark the node as visited 
         }
-        //prints the minimum spanning tree
         printMST(p,d);
 
     }
@@ -100,9 +92,7 @@ public class AdjacencyGraph {
         int totalDist = 0;
         //show all connections in the mininmum spanning tree
         for (Vertex city : p.keySet()) {
-            if(p.get(city) == null){
-                System.out.println(i + ": city: " + city.getName() + " to " + "null" + " has distance " + "null" + " km.");
-            }else{
+            if(p.get(city) != null){
                 System.out.println(i + ": city: " + city.getName() + " to " + p.get(city).getName() + " has distance " + d.get(city) + " km.");
             }
             i++;
@@ -112,25 +102,4 @@ public class AdjacencyGraph {
         System.out.println("total distance traveld " + totalDist + ".");
         System.out.println("total price to wire up the grid " + totalDist * 1000000 + "dkk.");
     }
-}
-
-class Pair implements Comparable<Pair>{
-    Vertex previous;
-    Integer distance;
-    int index;
-
-    // constructor
-    public Pair(Vertex prev, Integer distance,int index){
-        this.distance = distance;
-        this.previous = prev;
-        this.index=index;
-    }
-
-
-    // compare to method
-    @Override
-    public int compareTo(Pair o) {
-        return this.distance.compareTo((o.distance));
-    }
-    
 }

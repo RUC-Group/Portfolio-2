@@ -14,14 +14,6 @@ public class MinHeap{
     public int getPosition(Pair p){
         return positionTable.get(p);
     }
-    public int getPosition(Vertex v){
-        for(int i = 0; i < minheap.size() ; i++){
-            if(minheap.get(i).previous.name.equals(v.name)){
-                return positionTable.get(minheap.get(i));
-            }
-        }
-        return -1;
-    }
     public void updatePair (int pos, int dist){
         minheap.get(pos).distance=dist;
     }
