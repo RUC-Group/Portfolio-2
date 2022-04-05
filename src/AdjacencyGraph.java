@@ -63,7 +63,7 @@ public class AdjacencyGraph {
             Pair u = q.extractMin();  // - get minimum weight 
             for (int i = 0; i < u.previous.outEdges.size(); i++) { // iterating through every edge outgoing from the vertex in u
 
-                // if weight on current edge is smaller than the weight in the minimumspanning tree map AND the vertex is not visited, do
+                // if weight on current edge is smaller than the weight in the minimumspanning tree map AND the vertex we connect to has not been visited, do
                 if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to)  && !u.previous.outEdges.get(i).to.visited) {
                    
                     d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap the min weight saved in d with the new min weight 
