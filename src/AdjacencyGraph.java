@@ -43,36 +43,37 @@ public class AdjacencyGraph {
         Map<Vertex, Integer> d = new HashMap<>(); // Map that contains From and weights/distances for the minimum spanning tree
         Map<Vertex, Vertex> p = new HashMap<>(); // Map containing From and To destinatinos of vertecies for the minimum spanning tree
         ArrayList<Pair> VertexPairs=new ArrayList<>(); // List to store all Pairs, needed to acces and update correct pair
-
-        //set 
+ 
         for (int i = 0; i < Vertecies.size(); i++) {
             d.put(Vertecies.get(i), Integer.MAX_VALUE); //filling d values of vertices with infinite
             p.put(Vertecies.get(i), null); //setting previous vertices of vertices to null
         }
         d.put(Vertecies.get(0), 0);
 
-        for (int i = 0; i < Vertecies.size(); i++) {
+        for (int i = 0; i < Vertecies.size(); i++) { //fill minheap with pairs of vertex and element of map d
             Pair newPair = new Pair(Vertecies.get(i), d.get(Vertecies.get(i)));
             VertexPairs.add(newPair);
             q.Insert(newPair);
         }
         int pos = q.getPosition(VertexPairs.get(0));
-        q.decreasekey(pos);
+        q.decreasekey(pos); //update heap to follow correct heap order
 
         // main loop in the algortihm 
         while (!q.isEmpty()) {
             Pair u = q.extractMin();  // - get minimum weight 
-            for (int i = 0; i < u.previous.outEdges.size(); i++) { // iterating through every edge outgoing from the vertex in u.
+            for (int i = 0; i < u.previous.outEdges.size(); i++) { // iterating through every edge outgoing from the vertex in u
 
-                // if weight on current edge is smaller than the Weight in the minimumspanning tree map AND the vertex is not visited, do
+                // if weight on current edge is smaller than the weight in the minimumspanning tree map AND the vertex is not visited, do
                 if (u.previous.outEdges.get(i).weight < d.get(u.previous.outEdges.get(i).to)  && !u.previous.outEdges.get(i).to.visited) {
                    
                     d.put(u.previous.outEdges.get(i).to, u.previous.outEdges.get(i).weight);  // swap the min weight saved in d with the new min weight 
                     p.put(u.previous.outEdges.get(i).to, u.previous);   // insert the vertex to the p Map
 
-                    pos = q.getPosition(VertexPairs.get(u.previous.outEdges.get(i).to.index)); //searching for the pair with the vertex the edge is connecting to.
+                    Pair pairV=VertexPairs.get(u.previous.outEdges.get(i).to.index); //searching for the pair with the vertex the edge is connecting to
 
-                    VertexPairs.get(u.previous.outEdges.get(i).to.index).distance = d.get(u.previous.outEdges.get(i).to); //updating the distance variable of the pair with the new min weight.
+                    pairV.distance = d.get(u.previous.outEdges.get(i).to); //updating the distance variable of the pair with the new min weight
+
+                    pos = q.getPosition(pairV);
                     q.decreasekey(pos); //update heap to follow correct heap order
                     
                 }
