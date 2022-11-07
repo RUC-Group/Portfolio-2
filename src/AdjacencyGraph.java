@@ -7,8 +7,16 @@ public class AdjacencyGraph {
     ArrayList<Vertex> Vertecies = new ArrayList<>();; // - list of all vertecies in the graph
 
     // method that adds a vertext to the graph
-    public void addVertex(Vertex name) {
-        Vertecies.add(name);
+    public void addVertex(Vertex v) {
+        System.out.println("add vertext");
+        for (Vertex vertex : Vertecies) {
+            if(vertex.name.equals(v.name)){
+                System.out.println("same");
+                return;
+            } 
+        }
+        System.out.println("different");
+        Vertecies.add(v);
     }
 
     // method that adds an edge to the grap. This is undirected.
@@ -48,6 +56,7 @@ public class AdjacencyGraph {
             d.put(Vertecies.get(i), Integer.MAX_VALUE); //filling d values of vertices with infinite
             p.put(Vertecies.get(i), null); //setting previous vertices of vertices to null
         }
+        System.out.println(Vertecies.size());
         d.put(Vertecies.get(0), 0);
 
         for (int i = 0; i < Vertecies.size(); i++) { //fill minheap with pairs of vertex and element of map d

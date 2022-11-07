@@ -1,14 +1,59 @@
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 public class App {
     //Main method
     public static void main(String[] args) throws Exception {
-        AdjacencyGraph electricalGrid = makeElectricGridGraph();
+        //AdjacencyGraph electricalGrid = makeElectricGridGraph();
         //electricalGrid.printGraph();
-        electricalGrid.primMST();
+        //electricalGrid.primMST();
+        AdjacencyGraph g = makeGenGraph("C:\\Users\\mathi\\PycharmProjects\\SD-2\\src\\sparse64vertices.csv");
+        g.printGraph();
+        //g.primMST();
 
     }
+    public static AdjacencyGraph makeGenGraph(String src){
+        AdjacencyGraph graph = new AdjacencyGraph();
+        //parsing a CSV file into Scanner class constructor 
+        try {
+            Scanner sc = new Scanner(new File(src));
+            //parsing a CSV file into the constructor of Scanner class 
+            sc.useDelimiter(",");
+            //setting comma as delimiter pattern
+            int i=1;
+            while (sc.hasNext()) {
+                String from = sc.next();
+                String to = sc.next(); 
+                String weight = sc.next();
+                
+                
+                
+                Vertex fromV = new Vertex(from,i);
+                i++;
+                Vertex toV = new Vertex(to,i);
+                graph.addVertex(fromV);
+                graph.addVertex(toV);
 
+                System.out.println("weight is: "+ Integer.valueOf(weight));
+                graph.addEdge(fromV, toV, Integer.valueOf(weight));
+                System.out.println("end of while");
+                i++;
+            }
+            sc.close(); 
+        } catch (Exception e) {
+            // TODO: handle exception
+        } 
+         
+        return graph; 
+    }
     // creation of electrical grid graph
-    public static AdjacencyGraph makeElectricGridGraph() {
+    /*public static AdjacencyGraph makeElectricGridGraph() {
         AdjacencyGraph electricGrid = new AdjacencyGraph();
 
         // create Vertecies
@@ -95,5 +140,5 @@ public class App {
         electricGrid.addEdge(slagelse, sorø, 14);
 
         return electricGrid;
-    }
+    }*/
 }
